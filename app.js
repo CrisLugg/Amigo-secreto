@@ -3,47 +3,74 @@ let numAmigo = 0;
 
 
 function agregarAmigo() {
-    let nuevoAmigo = document.getElementById("amigo").value;
-    if (nuevoAmigo !== '')        
-        
+    let nuevoAmigo = document.getElementById("amigo").value.trim();
+    if (nuevoAmigo !== '')  
         {
         if (amigos.includes(nuevoAmigo)){
-        return alert("Ya ingresaste ese nombre.");
+        alert("Ya ingresaste ese nombre.");
         } else {
             amigos.push(nuevoAmigo);
             limpiarCaja();
             actualizarLista();
-            return nuevoAmigo} 
+            actualizarContador();} 
         }
         else 
         alert("Por favor, inserte un nombre.")
     }
 function limpiarCaja() {
-    let valorCaja = document.querySelector("#amigo");
-    valorCaja.value = ''
- } 
+    document.getElementById("amigo").value = ''; }
 
  
 function actualizarLista() {
-    let lista = document.querySelector("#listaAmigos")
-    lista.innerHTML = ""
+    let lista = getElementById("listaAmigos");
+    lista.innerHTML = "";
     for (i in amigos) {
         let elementoLista = document.createElement("li");
         elementoLista.textContent = amigos[i]
+        // Boton eliminar
+        let botonEliminar = document.createElement("button");
+        botonEliminar.textContent = "❌";
+        botonEliminar.onclick = () => eliminarAmigo(index);
+        elementoLista.appendChild(botonEliminar);
         lista.appendChild(elementoLista);
     }
  }
 
+function eliminarAmigo(index) {
+    amigos.splice(index, 1);
+    actualizarLista();
+    actualizarContador();
+}
+function actualizarContador() {
+    document.getElementById("contador").textContent = `Participantes: ${amigos.length}`;
+}
+
 function sortearAmigo() {
-    if (amigos ==  "") {alert("Ingresa nombres para sortear.")}
-        else {
-        let numAmigo = Math.floor(Math.random() * amigos.length);
-        let sorteado = amigos[numAmigo];
-        let listaResultado = document.querySelector("#resultado");
-        listaResultado.innerHTML = "";
-        let elementoLista2 = document.createElement("li2");
-        elementoLista2.textContent = sorteado;
-        listaResultado.appendChild(elementoLista2)
-        
+    function sortearAmigo() {
+        if (amigos.length === 0) {
+            alert("Ingresa nombres para sortear.");
+        } else {
+            let numAmigo = Math.floor(Math.random() * amigos.length);
+            let sorteado = amigos[numAmigo];
+            let listaResultado = document.getElementById("resultado");
+            
+            // Mostrar todos los sorteos
+            let elementoLista = document.createElement("li");
+            elementoLista.textContent = sorteado;
+            listaResultado.appendChild(elementoLista);
+            
+            // Eliminar el nombre sorteado de la lista
+            amigos.splice(numAmigo, 1);
+            actualizarLista();
+            actualizarContador();
+        }
     }
+}
+function reiniciarJuego() {
+    amigos = [];
+    actualizarLista();
+    actualizarContador();
+    document.getElementById("resultado").innerHTML = "";
     }
+
+    
