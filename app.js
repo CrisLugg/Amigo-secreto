@@ -73,4 +73,3 @@ function reiniciarJuego() {
     actualizarContador();
     document.getElementById("resultado").innerHTML = "";
 }
-    
